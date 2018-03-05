@@ -1,0 +1,25 @@
+{
+  "name": "aroundtheworld",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "api": "nodemon server.js",
+    "client": "npm run start --prefix ../client",
+    "dev": "concurrently \"npm run api\" \"npm run client\" "
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "concurrently": "^3.5.1",
+    "express": "^4.16.2",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.8",
+    "passport": "^0.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.1"
+  }
+}
