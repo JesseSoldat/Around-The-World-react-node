@@ -1,8 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import reduxThunk from 'redux-thunk';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import './index.css';
+import configureStore from './store/configureStore';
+import AppRouter, {history} from './router/AppRouter';
+
+const LoadingPage = () => (<div>Loading...</div>);
+
+const store = configureStore();
+
+const dom = document.getElementById('root');
+
+const jsx = (
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>
+);
+
+let appHasRenderedOnce = false;
+
+const renderApp = () => {
+  if(!appHasRenderedOnce) {
+    ReactDOM.render(jsx, dom);
+    appHasRenderedOnce = true;
+  }
+}
+
+ReactDOM.render(<LoadingPage/>, dom);
+
+setTimeout(() => {
+  renderApp();
+}, 500);
+
 registerServiceWorker();
