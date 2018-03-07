@@ -5,15 +5,14 @@ const bcrypt = require('bcryptjs');
 const pick = require('lodash').pick;
 
 const UserSchema = new mongoose.Schema({
+  googleId: String,
   username: {
     type: String,
-    required: true,
     trim: true,
     minlength: 3
   },
   email: {
     type: String,
-    required: true,
     trim: true,
     minlength: 3,
     unique: true,
@@ -24,7 +23,6 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
     trim: true,
     minlength: 6
   },
@@ -54,6 +52,24 @@ UserSchema.pre('save', function(next) {
     });
   } else { next(); }
 });
+
+UserSchema.method.generateAuthToken =  async function() {
+  const user = this;
+  const access = "auth";
+  const token = jwt.sign({
+    _id: user._id.toHexString(),
+    access
+  }, process.env.JWT_SECRET);
+  user.tokens.push({access, token});
+  try {
+    await user.save();
+    return token;
+  } catch (err) {
+    console.log('generateAuthToken ERR', err);   
+    return err;
+  }
+
+}
 
 const User = mongoose.model('User', UserSchema);
 
