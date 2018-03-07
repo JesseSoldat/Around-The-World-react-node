@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {checkEmail} from '../utils/utils';
+import * as actions from '../actions/auth';
 
 class AuthForm extends Component {
   state = {
@@ -92,11 +93,12 @@ class AuthForm extends Component {
       } 
       if(this.props.formType === 'register') {
         if(this.state.usernameErrorMsg === null) {
-          return console.log('REGISTER SUBMITTED');        
+            
+          return this.props.startRegister(this.state.username, this.state.email, this.state.password);    
         }
         return;
       }
-      return console.log('LOGIN SUBMITTED');    
+      return this.props.startLogin(this.state.email, this.state.password);    
     });
   }
 
@@ -137,4 +139,5 @@ const mapStateToProps = (state, ownProps) => ({
   formType: ownProps.formType
 });
 
-export default connect(mapStateToProps)(AuthForm);
+
+export default connect(mapStateToProps, actions)(AuthForm);

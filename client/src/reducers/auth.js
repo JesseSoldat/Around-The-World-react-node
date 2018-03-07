@@ -11,6 +11,7 @@ export default (state = initialState, action) => {
       };
 
     case "REGISTER":
+      console.log('REGISTER', action);     
       return {
         ...state,
         _id: action._id,

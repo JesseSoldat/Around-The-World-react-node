@@ -30,8 +30,13 @@ const renderApp = () => {
 
 ReactDOM.render(<LoadingPage/>, dom);
 
-setTimeout(() => {
+const user = JSON.parse(localStorage.getItem('user'));
+
+if(user) {
+  store.dispatch(login(user._id, user.token));
   renderApp();
-}, 500);
+} else {
+  renderApp();
+}
 
 registerServiceWorker();

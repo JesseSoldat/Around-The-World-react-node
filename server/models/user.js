@@ -53,23 +53,44 @@ UserSchema.pre('save', function(next) {
   } else { next(); }
 });
 
-UserSchema.method.generateAuthToken =  async function() {
+UserSchema.methods.generateAuthToken = async function() {
   const user = this;
   const access = "auth";
   const token = jwt.sign({
     _id: user._id.toHexString(),
     access
   }, process.env.JWT_SECRET);
+  user.tokens = [];
   user.tokens.push({access, token});
+
   try {
     await user.save();
     return token;
-  } catch (err) {
+  } 
+  catch(err) {
     console.log('generateAuthToken ERR', err);   
     return err;
   }
+};
 
-}
+UserSchema.statics.findByCredentials = async function(email, password) {
+  const User = this;
+  try {
+    const user = await User.findOne({email});
+    if(!user) {
+      return Promise.reject({msg: 'No user found!'});
+    }
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, user.password, (err, res) => {
+        if(res) { resolve(user); }
+        reject(err);
+      });
+    });
+  }
+  catch (err) {
+    
+  }
+};
 
 const User = mongoose.model('User', UserSchema);
 
