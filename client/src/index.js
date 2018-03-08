@@ -5,7 +5,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 import './index.css';
 import configureStore from './store/configureStore';
-import AppRouter, {history} from './router/AppRouter';
+import AppRouter from './router/AppRouter';
+import {login} from './actions/auth';
 
 const LoadingPage = () => (<div>Loading...</div>);
 

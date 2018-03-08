@@ -3,7 +3,7 @@ const initialState = { _id: null, token: null };
 export default (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN":
-      console.log('LOGIN', action);   
+      // console.log('LOGIN', action);   
       return {
         ...state,
         _id: action._id,
@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
       };
 
     case "REGISTER":
-      console.log('REGISTER', action);     
+      // console.log('REGISTER', action);     
       return {
         ...state,
         _id: action._id,

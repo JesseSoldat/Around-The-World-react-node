@@ -6,6 +6,7 @@ import Welcome from '../pages/Welcome';
 import RegisterPage from '../pages/RegisterPage';
 import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
+import MapItPage from '../pages/MapItPage';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -21,6 +22,7 @@ const AppRouter = () => (
         <PublicRoute path="/register" component={RegisterPage} exact />
         <PublicRoute path="/login" component={LoginPage} exact />
         <PrivateRoute path="/dashboard" component={DashboardPage} exact/>
+        <PrivateRoute path="/map" component={MapItPage} exact />
         
         <Route component={NotFoundPage} />
       </Switch>
